@@ -1,0 +1,12 @@
+FAKTURA FV/2026/001
+Data wystawienia: 2026-01-15
+Sprzedawca: Example Software Sp. z o.o.
+Adres: ul. Testowa 12, 00-001 Warszawa
+NIP: 5250000000
+
+Nazwa Ilość Cena Wartość
+Usługa wdrożeniowa 1 199,00 199,00
+Konsultacje techniczne 2 150,00 300,00
+
+Metoda płatności: przelew
+Razem do zapłaty: 499,00 PLN

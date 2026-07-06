@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: SMF Young Tech Challenge API
+  version: 1.0.0
+  description: REST API dla CRUD produktów oraz uploadu faktur/paragonów z OCR i ekstrakcją AI.
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /api/products:
+    get:
+      tags: [Products]
+      summary: Lista produktów
+      responses:
+        '200': { description: OK }
+    post:
+      tags: [Products]
+      summary: Utwórz produkt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '201': { description: Created }
+  /api/products/{id}:
+    get:
+      tags: [Products]
+      summary: Szczegóły produktu
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200': { description: OK }
+    put:
+      tags: [Products]
+      summary: Aktualizuj produkt
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200': { description: OK }
+    delete:
+      tags: [Products]
+      summary: Usuń produkt
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '204': { description: No Content }
+  /api/invoices/upload:
+    post:
+      tags: [Invoices]
+      summary: Upload pliku PDF/JPG/PNG i przetworzenie OCR + AI
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201': { description: Created }
+  /api/invoices:
+    get:
+      tags: [Invoices]
+      summary: Lista przetworzonych dokumentów
+      responses:
+        '200': { description: OK }
+  /api/invoices/{id}:
+    get:
+      tags: [Invoices]
+      summary: Szczegóły faktury/paragonu
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200': { description: OK }
+    patch:
+      tags: [Invoices]
+      summary: Ręczna korekta danych po OCR
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200': { description: OK }
+    delete:
+      tags: [Invoices]
+      summary: Usuń fakturę/paragon
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '204': { description: No Content }
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    ProductInput:
+      type: object
+      required: [name, price, currency, stock]
+      properties:
+        name: { type: string, example: Usługa wdrożeniowa }
+        sku: { type: string, nullable: true, example: DEMO-001 }
+        description: { type: string, nullable: true }
+        price: { type: number, format: float, example: 199.00 }
+        currency: { type: string, example: PLN }
+        stock: { type: integer, example: 5 }
