@@ -79,11 +79,10 @@ Opcjonalnie:
 ### 1. Sklonowanie repozytorium
 
 ```bash
-git clone https://github.com/TWOJ_LOGIN/smf-young-tech-challenge.git
+git clone https://github.com/chych-a/smf-young-tech-challenge.git
 cd smf-young-tech-challenge
 ```
 
-W miejscu `TWOJ_LOGIN` należy podać swój login GitHub.
 
 ---
 
